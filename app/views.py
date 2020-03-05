@@ -1,19 +1,10 @@
 from app import app
+from . import db
 from flask import render_template, request, redirect, url_for, flash
 from flask_wtf import FlaskForm
 from wtforms import StringField
 from wtforms.validators import DataRequired, Email
 from flask_wtf.file import FileField, FileAllowed, FileRequired
-
-
-@app.route("/")
-def home():
-    return render_template("home.html")
-
-
-@app.route("/about/")
-def about():
-    return render_template("about.html")
 
 
 def format_date_joined():
@@ -36,7 +27,36 @@ class AddProfile(FlaskForm):
     ])
 
 
-"""FINISH THIS FUNCTION"""
+class UserProfile(db.Model):
+    __tablename__ = "user_profiles"
+
+    id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String(80))
+    last_name = db.Column(db.String(80))
+    gender = db.Column(db.String(80))
+    email = db.Column(db.String(120))
+    location = db.Column(db.String(120))
+    biography = db.Column(db.String(140))
+    '''photo = db.Column(db.String(255))'''
+    def __init__(self, first_name, last_name, gender, email, location,
+                 biography, photo):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.gender = gender
+        self.email = email
+        self.location = location
+        self.biography = biography
+        self.photo = photo
+
+
+@app.route("/")
+def home():
+    return render_template("home.html")
+
+
+@app.route("/about/")
+def about():
+    return render_template("about.html")
 
 
 @app.route("/profile", methods=["POST", "GET"])
@@ -54,6 +74,7 @@ def profile():
         photo = form.photo.data
         filename = secure_filename(photo.filename)
         photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
         flash("Profile was successfully added")
         return redirect(url_for('profiles'))
 
@@ -62,7 +83,10 @@ def profile():
 
 @app.route("/profiles")
 def profiles():
-    return render_template("profiles.html", date=format_date_joined())
+    users = db.session.query(UserProfile).all()
+    return render_template("profiles.html",
+                           users=users,
+                           date=format_date_joined())
 
 
 @app.route("/profile/<userid>")

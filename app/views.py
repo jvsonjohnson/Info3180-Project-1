@@ -1,5 +1,9 @@
 from app import app
 from flask import render_template, request, redirect, url_for, flash
+from flask_wtf import FlaskForm
+from wtforms import StringField
+from wtforms.validators import DataRequired, Email
+from flask_wtf.file import FileField, FileAllowed, FileRequired
 
 
 @app.route("/")
@@ -12,14 +16,58 @@ def about():
     return render_template("about.html")
 
 
-@app.route("/profile")
+def format_date_joined():
+    import datetime
+    now = datetime.datetime.now()  # today's date
+    date_joined = datetime.date(2019, 2, 7)  # a specific date
+    return date_joined.strftime("%B, %Y")
+
+
+class AddProfile(FlaskForm):
+    fname = StringField("", validators=[DataRequired()])
+    lname = StringField("", validators=[DataRequired()])
+    gender = StringField("", validators=[DataRequired()])
+    email = StringField("", validators=[DataRequired(), Email()])
+    location = StringField("", validators=[DataRequired()])
+    biography = StringField("", validators=[DataRequired()])
+    photo = FileField(validators=[
+        FileRequired(),
+        FileAllowed(['jpg', 'png'], 'Images only!')
+    ])
+
+
+"""FINISH THIS FUNCTION"""
+
+
+@app.route("/profile", methods=["POST", "GET"])
 def profile():
-    return render_template("profile.html")
+
+    form = AddProfile()
+
+    if request.method == "POST" and form.validate_on_submit():
+        fname = form.fname.data
+        lname = form.lname.data
+        gender = form.gender.data
+        email = form.email.data
+        location = form.location.data
+        biography = form.biography.data
+        photo = form.photo.data
+        filename = secure_filename(photo.filename)
+        photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        flash("Profile was successfully added")
+        return redirect(url_for('profiles'))
+
+    return render_template("profile.html", form=form)
 
 
 @app.route("/profiles")
 def profiles():
-    return render_template("profiles.html")
+    return render_template("profiles.html", date=format_date_joined())
+
+
+@app.route("/profile/<userid>")
+def userprofile():
+    return render_template("profiles.html", date=format_date_joined())
 
 
 @app.route("/<file_name>.txt")

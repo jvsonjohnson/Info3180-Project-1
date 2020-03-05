@@ -1,5 +1,52 @@
 {% extends "base.html" %} {% block main %}
 
 <h1>Add Profile</h1>
+<form
+  method="POST"
+  action="{{ url_for('profile') }}"
+  enctype="multipart/form-data"
+>
+  <div class="myform">
+    <div class="section">
+      <h4>First Name</h4>
+      {{form.fname.label(required = 'required')}} {{form.fname(size=20,
+      class='textarea')}}
+    </div>
+    <div class="section">
+      <h4>Last Name</h4>
+      {{form.lname.label(required = 'required')}} {{form.lname(size=20,
+      class='textarea')}}
+    </div>
+    <div class="section">
+      <h4>Gender</h4>
+      <select id="gender" name="gender" form="genderform">
+        <option value="" aria-placeholder="Select Gender"></option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        {{form.gender.label(required = 'required')}}
+      </select>
+    </div>
+    <div class="section">
+      <h4>Email</h4>
+      {{form.email.label(required = 'required')}} {{form.email(size=20,
+      class='textarea', placeholder="e.g jdoe@example.com")}}
+    </div>
+    <div class="section">
+      <h4>Location</h4>
+      {{form.location.label(required = 'required')}} {{form.location(size=20,
+      class='textarea', placeholder="e.g Kingston, Jamaica")}}
+    </div>
+    <div class="section">
+      <h4>Biography</h4>
+      {{form.biography.label(required = 'required')}} {{form.biography(size=75,
+      class='mtextarea')}}
+    </div>
+    <div class="section">
+      <h4>Profile Picture</h4>
+      {{ form.photo(class="uploadpic") }}
+    </div>
+    <div class="section"><button type="submit">Add Profile</button></div>
+  </div>
+</form>
 
 {% endblock %}

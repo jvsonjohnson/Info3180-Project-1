@@ -1,10 +1,12 @@
+import os
 from app import app
 from . import db
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash, session, abort
 from flask_wtf import FlaskForm
 from wtforms import StringField
 from wtforms.validators import DataRequired, Email
 from flask_wtf.file import FileField, FileAllowed, FileRequired
+from werkzeug.utils import secure_filename
 
 
 def format_date_joined():
@@ -37,7 +39,8 @@ class UserProfile(db.Model):
     email = db.Column(db.String(120))
     location = db.Column(db.String(120))
     biography = db.Column(db.String(140))
-    '''photo = db.Column(db.String(255))'''
+    photo = db.Column(db.String(255))
+
     def __init__(self, first_name, last_name, gender, email, location,
                  biography, photo):
         self.first_name = first_name
@@ -62,23 +65,27 @@ def about():
 @app.route("/profile", methods=["POST", "GET"])
 def profile():
 
-    form = AddProfile()
+    pform = AddProfile()
 
-    if request.method == "POST" and form.validate_on_submit():
-        fname = form.fname.data
-        lname = form.lname.data
-        gender = form.gender.data
-        email = form.email.data
-        location = form.location.data
-        biography = form.biography.data
-        photo = form.photo.data
+    if request.method == "POST" and pform.validate_on_submit():
+        fname = pform.fname.data
+        lname = pform.lname.data
+        gender = pform.gender.data
+        email = pform.email.data
+        location = pform.location.data
+        biography = pform.biography.data
+        photo = pform.photo.data
         filename = secure_filename(photo.filename)
         photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
+        data = UserProfile(fname, lname, gender, email, location, biography,
+                           photo)
+        db.session.add(data)
+        db.session.commit()
         flash("Profile was successfully added")
         return redirect(url_for('profiles'))
 
-    return render_template("profile.html", form=form)
+    return render_template("profile.html", form=pform)
 
 
 @app.route("/profiles")
@@ -90,8 +97,8 @@ def profiles():
 
 
 @app.route("/profile/<userid>")
-def userprofile():
-    return render_template("profiles.html", date=format_date_joined())
+def userprofile(id):
+    return UserProfile.query.get(int(id))
 
 
 @app.route("/<file_name>.txt")

@@ -7,6 +7,7 @@
   enctype="multipart/form-data"
 >
   <div class="myform">
+    {{form.csrf_token}}
     <div class="section">
       <h4>First Name</h4>
       {{form.fname.label(required = 'required')}} {{form.fname(size=20,
@@ -19,8 +20,7 @@
     </div>
     <div class="section">
       <h4>Gender</h4>
-      <select id="gender" name="gender" form="genderform">
-        <option value="" aria-placeholder="Select Gender"></option>
+      <select id="gender" name="gender">
         <option value="male">Male</option>
         <option value="female">Female</option>
         {{form.gender.label(required = 'required')}}

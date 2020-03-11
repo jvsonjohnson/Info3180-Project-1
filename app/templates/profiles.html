@@ -2,4 +2,24 @@
 
 <h1>Profiles</h1>
 
+<div class="">
+  {% if users %} {% for user in users %}
+
+  <div class="profiles">
+    <div class="left">
+      <img src="{{ url_for('static', filename= "{{user.photo}}")}} class="ppic""
+      />
+      <div class="pinfo">
+        <h4 class="pname">{{user.first_name}} {{user.last_name}}</h4>
+        <p class="pgender"><i class="far fa-user"></i> {{user.gender}}</p>
+        <p class="plocation">
+          <i class="fas fa-map-marker-alt"></i> {{user.location}}
+        </p>
+      </div>
+    </div>
+    <button class="pbtn">View Profile</button>
+  </div>
+
+  {% endfor %} {%endif %}
+</div>
 {% endblock %}

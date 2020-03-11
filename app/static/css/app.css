@@ -41,3 +41,43 @@ select {
   border: 1px solid black;
   border-radius: 5px;
 }
+
+.profiles {
+  width: 600px;
+  border: 1px solid black;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.left {
+  display: flex;
+}
+
+.pinfo {
+  line-height: 4px;
+  margin-top: 20px;
+  font-family: "Poppins", sans-serif;
+}
+
+.pbtn {
+  background-color: #44c767;
+  border-radius: 7px;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+  padding: 9px 35px;
+  height: 40px;
+  margin-top: 45px;
+}
+
+.left img {
+  text-align: center;
+  height: 100px;
+  width: 100px;
+  border-radius: 100px;
+  margin: 20px 10px;
+  background-size: cover;
+}

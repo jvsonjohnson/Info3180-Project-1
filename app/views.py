@@ -79,7 +79,7 @@ def profile():
         photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
         data = UserProfile(fname, lname, gender, email, location, biography,
-                           photo)
+                           filename)
         db.session.add(data)
         db.session.commit()
         flash("Profile was successfully added")
@@ -90,15 +90,29 @@ def profile():
 
 @app.route("/profiles")
 def profiles():
-    users = db.session.query(UserProfile).all()
+    users = UserProfile.query.all()
+    image_list = get_uploaded_images()
     return render_template("profiles.html",
                            users=users,
+                           images=image_list,
                            date=format_date_joined())
 
 
 @app.route("/profile/<userid>")
 def userprofile(id):
     return UserProfile.query.get(int(id))
+
+
+def get_uploaded_images():
+    import os
+    rootdir = os.getcwd()
+    print(rootdir)
+    ilist = []
+    for subdir, dirs, files in os.walk(rootdir + r'\app\static\uploads'):
+        for file in files:
+            ilist.append(file)
+
+    return ilist
 
 
 @app.route("/<file_name>.txt")

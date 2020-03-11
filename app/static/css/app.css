@@ -1,6 +1,32 @@
 body {
   padding-top: 5rem;
 }
+.container {
+  margin-bottom: 50px;
+}
+a {
+  text-decoration: none;
+  color: white;
+}
+
+a:hover {
+  text-decoration: none;
+  color: white;
+}
+
+form {
+  border: 1px solid #dfe3ee;
+  border-top: 3px solid #428bca;
+  border-radius: 10px;
+  width: 350px;
+  display: grid;
+  margin: 20px 0;
+  justify-content: center;
+  justify-items: center;
+  -webkit-box-shadow: 0px 0px 14px 0px rgba(115, 115, 115, 0.7);
+  -moz-box-shadow: 0px 0px 14px 0px rgba(115, 115, 115, 0.7);
+  box-shadow: 0px 0px 14px 0px rgba(115, 115, 115, 0.7);
+}
 
 .textarea {
   width: 300px;
@@ -18,6 +44,10 @@ body {
   border: 1px solid black;
 }
 
+#gender {
+  padding: 1px;
+}
+
 .section h4 {
   font-size: 20px;
   margin: 5px;
@@ -32,7 +62,7 @@ button {
   background-color: #00ff83;
   border: 1px solid #00ff83;
   border-radius: 5px;
-  margin-top: 20px;
+  margin: 10px 0;
   padding: 3px;
 }
 
@@ -44,13 +74,28 @@ select {
 
 .profiles {
   width: 600px;
-  border: 1px solid black;
-  border-radius: 20px;
+  border: 1px solid #dfe3ee;
+  border-top: 3px solid #428bca;
+  border-radius: 10px;
   display: flex;
   justify-content: space-around;
   margin-top: 20px;
+  -webkit-box-shadow: 0px 0px 14px 0px rgba(115, 115, 115, 0.7);
+  -moz-box-shadow: 0px 0px 14px 0px rgba(115, 115, 115, 0.7);
+  box-shadow: 0px 0px 14px 0px rgba(115, 115, 115, 0.7);
 }
 
+.profile-box {
+  width: 600px;
+  border: 1px solid #dfe3ee;
+  border-top: 3px solid #428bca;
+  border-radius: 10px;
+  margin-top: 20px;
+  font-family: "Poppins", sans-serif;
+  -webkit-box-shadow: 0px 0px 14px 0px rgba(115, 115, 115, 0.7);
+  -moz-box-shadow: 0px 0px 14px 0px rgba(115, 115, 115, 0.7);
+  box-shadow: 0px 0px 14px 0px rgba(115, 115, 115, 0.7);
+}
 .left {
   display: flex;
 }
@@ -73,11 +118,55 @@ select {
   margin-top: 45px;
 }
 
-.left img {
+img {
   text-align: center;
   height: 100px;
   width: 100px;
   border-radius: 100px;
   margin: 20px 10px;
   background-size: cover;
+}
+
+.pbuttons {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+
+.myButton {
+  background-color: #44c767;
+  border-radius: 7px;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+  padding: 9px 35px;
+}
+
+.fbtn {
+  background-color: #428bca;
+  border-radius: 7px;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+  padding: 9px 50px;
+}
+
+.top-info {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 10px;
+  line-height: 10px;
+}
+
+.bottom-info p {
+  margin: 10px 30px;
+  font-size: 15px;
+}
+.bottom-info h4 {
+  margin: 10px 30px;
+  font-size: 20px;
+  color: #545d57;
 }

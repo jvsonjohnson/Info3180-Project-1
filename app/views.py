@@ -12,8 +12,8 @@ from werkzeug.utils import secure_filename
 def format_date_joined():
     import datetime
     now = datetime.datetime.now()  # today's date
-    date_joined = datetime.date(2019, 2, 7)  # a specific date
-    return date_joined.strftime("%B, %Y")
+    date_joined = now  # a specific date
+    return date_joined.strftime("%B %V, %Y")
 
 
 class AddProfile(FlaskForm):
@@ -38,7 +38,7 @@ class UserProfile(db.Model):
     gender = db.Column(db.String(80))
     email = db.Column(db.String(120))
     location = db.Column(db.String(120))
-    biography = db.Column(db.String(140))
+    biography = db.Column(db.String(255))
     photo = db.Column(db.String(255))
 
     def __init__(self, first_name, last_name, gender, email, location,
@@ -82,6 +82,7 @@ def profile():
                            filename)
         db.session.add(data)
         db.session.commit()
+
         flash("Profile was successfully added")
         return redirect(url_for('profiles'))
 
@@ -94,13 +95,13 @@ def profiles():
     image_list = get_uploaded_images()
     return render_template("profiles.html",
                            users=users,
-                           images=image_list,
                            date=format_date_joined())
 
 
-@app.route("/profile/<userid>")
+@app.route("/profile/<id>")
 def userprofile(id):
-    return UserProfile.query.get(int(id))
+    user = UserProfile.query.filter_by(id=id).first_or_404()
+    return render_template("user.html", user=user, date=format_date_joined())
 
 
 def get_uploaded_images():

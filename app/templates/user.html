@@ -1,0 +1,34 @@
+{% extends "base.html" %} {% block main %}
+
+<div class="container">
+  {% if user %}
+  <div class="profile-box">
+    <div class="top-info">
+      <img src="{{ url_for('static', filename= "uploads/" + user.photo)}}"
+      class="ppic"" />
+      <div class="details">
+        <h2>{{user.first_name}} {{user.last_name}}</h2>
+        <p><i class="far fa-envelope"></i> {{user.email}}</p>
+        <p><i class="fas fa-map-marker-alt"></i> {{user.location}}</p>
+        <p><i class="far fa-calendar-alt"></i> Joined on {{ date }}</p>
+      </div>
+    </div>
+    <div class="bottom-info">
+      <h4>About Me</h4>
+      <p>
+        {{user.biography}}
+      </p>
+      <div class="pbuttons">
+        <div class="f-button">
+          <a href="#" class="myButton">Send Message</a>
+        </div>
+        <div class="f-button">
+          <a href="#" class="fbtn">Follow</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}

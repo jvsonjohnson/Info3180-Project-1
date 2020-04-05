@@ -43,7 +43,13 @@
     </div>
     <div class="section">
       <h4>Profile Picture</h4>
-      {{ form.photo(class="uploadpic") }}
+      {{ form.photo(id="") }}
+      <div id="upload_button" class="uploadpic">
+        <label>
+          <input type="file" />
+          <!--<span class="btn btn-default">Browse...</span>-->
+        </label>
+      </div>
     </div>
     <div class="section"><button type="submit">Add Profile</button></div>
   </div>

@@ -57,6 +57,10 @@ form {
   margin-bottom: 10px;
 }
 
+#hide {
+  display: none;
+}
+
 button {
   color: white;
   background-color: #00ff83;
@@ -169,4 +173,15 @@ img {
   margin: 10px 30px;
   font-size: 20px;
   color: #545d57;
+}
+
+#upload_button {
+  display: inline-block;
+}
+#upload_button input[type="file"] {
+  display: none;
+}
+
+.btn-default {
+  border: 1px solid black;
 }

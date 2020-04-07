@@ -7,7 +7,7 @@ UPLOAD_FOLDER = './app/static/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config["SECRET_KEY"] = "staywoke"
 
-if ENV == 'app':
+if ENV == 'dev':
     app.debug = True
     app.config[
         "SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:project1@localhost/project1"
